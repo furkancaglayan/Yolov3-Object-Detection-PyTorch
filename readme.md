@@ -2,7 +2,7 @@
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
-[![GitHub release 1](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)](https://GitHub.com/Naereen/StrapDown.js/releases/)
+
 ## Useful Links
 You Only Look Once: Unified, Real-Time Object Detection: https://pjreddie.com/darknet/yolo/
 
@@ -10,6 +10,7 @@ Darknet: https://pjreddie.com/darknet/
 
 PyTorch Get Started: https://pytorch.org/get-started/locally/ 
 
+Coco Dataset: https://cocodataset.org/
 ## TO-DO
 - [x] Run object detection on local video
 - [ ] Categorize vehicles according to their sizes.
@@ -90,10 +91,11 @@ This command would detect objects in the video and displays the processed frames
 it would not save the final video. To save the video you should explicitly specify the save flag and the
 output path. Such as:
 
-```jupyter
+```
 python detect.py video.mp4 config/yolov3.cfg config/yolov3.weights config/coco.names --s -path det.mp4
 ```  
-Above command would save the processed video at the end with the name 'det.mp4'.
+Above command would save the processed video at the end with the name 'det.mp4'. If you want to stop press space. program will terminate and
+output until this point will be saved.
 
 You can also set other optional parameters such as fps, confidence threshold and non-max 
 suppression threshold.
@@ -108,3 +110,11 @@ To get more information about parameters, run the following:
 python detect.py -h
 ```  
 
+### Run on Single Image
+
+To run the detector on single image, use the same pattern of arguments. Except instead of video input, provide an image input with extensions
+jpeg, jpg or png. And if you want to save the final image, provide a valid -path argument and set --s flag.
+
+```
+python detect.py image.jpg config/yolov3.cfg config/yolov3.weights config/coco.names --s -path image_det.jpg
+```  
