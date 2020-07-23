@@ -49,7 +49,7 @@ def detect_image(img, model):
 
 def load_image(path):
     img = cv2.imread(path)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     return img
 
 
@@ -94,7 +94,6 @@ def detect_from_video(video, callback, darknet_model, color_list, fps=24, displa
             break
     bar.finish()
     if save_final_video:
-
         video_out.release()
 
 
@@ -125,6 +124,10 @@ def detection_callback(frame, model, display, color_list):
             # cv2.rectangle(frame, (x1, y1 - 35), (x1 + len(cls) * 19 + 80, y1), color, -1)
             cv2.putText(frame, info, (x1, y1 - 10), cv2.FONT_HERSHEY_PLAIN, fontScale=1.5,
                         color=color, thickness=1)
+
+        for i,each_cls in enumerate(unique_labels):
+            cv2.putText(frame, classes[int(each_cls)], (30, 30+30*i), cv2.FONT_HERSHEY_PLAIN, fontScale=1.5,
+                    color= color_list[int(each_cls)], thickness=2)
     # frame = cv2.resize(frame, (1024, 1024))
     if display:
         cv2.imshow('Stream', frame)
