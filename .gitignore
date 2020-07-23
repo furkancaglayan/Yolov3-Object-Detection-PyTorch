@@ -6,6 +6,26 @@ __pycache__/
 # C extensions
 *.so
 
+Working on a Symfony2 project using phpStorm IDE, I have added couple of files to git ignore but one file despite being added to git ignore is always appearing....I have tried multiple times but its always there
+
+.gitignore file:
+
+/app/config/parameters.yml
+/bin/
+/build/
+/composer.phar
+/vendor/
+/web/bundles/
+/app/bootstrap.php.cache
+/app/cache/*
+!app/cache/.gitkeep
+/app/config/parameters.yml
+/app/logs/*
+!app/logs/.gitkeep
+/app/phpunit.xml
+
+#idea folder
+.idea/
 # Distribution / packaging
 .Python
 build/
