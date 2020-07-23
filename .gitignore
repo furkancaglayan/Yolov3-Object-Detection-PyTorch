@@ -26,6 +26,8 @@ Working on a Symfony2 project using phpStorm IDE, I have added couple of files t
 
 #idea folder
 .idea/
+.idea
+
 # Distribution / packaging
 .Python
 build/
