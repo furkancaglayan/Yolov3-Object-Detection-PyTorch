@@ -48,7 +48,9 @@ def detect_image(img, model):
 
 
 def load_image(path):
-    return Image.open(path)
+    img = cv2.imread(path)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    return img
 
 
 def load_video(path) -> list:
@@ -87,13 +89,16 @@ def detect_from_video(video, callback, darknet_model, color_list, fps=24, displa
         if save_final_video:
             video_out.write(processed_frame)
         bar.next()
+        if cv2.waitKey(1) == 32:
+            cv2.destroyAllWindows()
+            break
     bar.finish()
     if save_final_video:
+
         video_out.release()
 
 
 def detection_callback(frame, model, display, color_list):
-    # frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     img = np.array(frame)
     pil_image = Image.fromarray(img)
 
@@ -114,7 +119,8 @@ def detection_callback(frame, model, display, color_list):
             x1 = int(((x1 - pad_x // 2) / unpad_w) * img.shape[1])
             color = color_list[int(cls_pred)]
             cls = classes[int(cls_pred)]
-            info = f'{cls} - {int(cls_pred)} - Coord: {int(x1)},{int(y1)},{int(x2)},{int(y2)}'
+            info = f'{cls} - {int(cls_pred)}'
+            # - Coord: {int(x1)},{int(y1)},{int(x2)},{int(y2)}
             cv2.rectangle(frame, (x1, y1), (x1 + box_w, y1 + box_h), color, 2)
             # cv2.rectangle(frame, (x1, y1 - 35), (x1 + len(cls) * 19 + 80, y1), color, -1)
             cv2.putText(frame, info, (x1, y1 - 10), cv2.FONT_HERSHEY_PLAIN, fontScale=1.5,
@@ -124,7 +130,6 @@ def detection_callback(frame, model, display, color_list):
         cv2.imshow('Stream', frame)
         cv2.waitKey(1)
     return frame
-    # outvideo.write(frame)
 
 
 if __name__ == '__main__':
@@ -134,7 +139,7 @@ if __name__ == '__main__':
         allow_abbrev=False,
         description='Object Detection program that implements DarkNet.'
     )
-    parser.add_argument('video', help='Input video.')
+    parser.add_argument('input', help='Input video or image.')
 
     parser.add_argument('configuration', help='Configuration file path. Ends with .cfg '
                                               'extension')
@@ -162,11 +167,22 @@ if __name__ == '__main__':
                                   )
     conf_thres, nms_thres = args.cf, args.nms
     colors = [(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)) for i in range(len(classes) + 1)]
-    detect_from_video(video=args.video,
-                      callback=detection_callback,
-                      color_list=colors,
-                      darknet_model=darknet,
-                      fps=args.fps,
-                      display_video=args.display,
-                      save_final_video=args.save,
-                      save_path=args.path)
+
+    extension = str(args.input).split('.')[-1]
+    if extension in ['jpg', 'jpeg', 'png']:
+        img = detection_callback(load_image(args.input), darknet, False, colors)
+        cv2.imshow("Frame", img)
+        if args.save:
+            cv2.imwrite(args.path, img)
+        if cv2.waitKey(0) == 27:
+            cv2.destroyAllWindows()
+
+    else:
+        detect_from_video(video=args.input,
+                          callback=detection_callback,
+                          color_list=colors,
+                          darknet_model=darknet,
+                          fps=args.fps,
+                          display_video=args.display,
+                          save_final_video=args.save,
+                          save_path=args.path)
