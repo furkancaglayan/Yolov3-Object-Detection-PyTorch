@@ -6,6 +6,17 @@ You Only Look Once: Unified, Real-Time Object Detection: https://pjreddie.com/da
 Darknet: https://pjreddie.com/darknet/
 
 PyTorch Get Started: https://pytorch.org/get-started/locally/ 
+
+## TO-DO
+- [x] Run object detection on local video
+- [ ] Categorize vehicles according to their sizes.
+- [ ] Object Detection on video stream.
+- [ ] Object Detection on Unreal Engine 4
+- [ ] (Optional) Velocity prediction of objects.
+- [ ] (Optional) Depth estimation of objects.
+
+
+
 ## How to Install?
 
 ### 1 - Install Anaconda
@@ -76,7 +87,7 @@ This command would detect objects in the video and displays the processed frames
 it would not save the final video. To save the video you should explicitly specify the save flag and the
 output path. Such as:
 
-```
+```jupyter
 python detect.py video.mp4 config/yolov3.cfg config/yolov3.weights config/coco.names --s -path det.mp4
 ```  
 Above command would save the processed video at the end with the name 'det.mp4'.
@@ -93,3 +104,4 @@ To get more information about parameters, run the following:
 ```
 python detect.py -h
 ```  
+
