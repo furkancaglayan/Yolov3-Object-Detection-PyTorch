@@ -20,7 +20,6 @@ Coco Dataset: https://cocodataset.org/
 - [ ] (Optional) Depth estimation of objects.
 
 
-
 ## How to Install?
 
 ### 1 - Install Anaconda
@@ -35,14 +34,14 @@ proceed to the next step.
 On Windows, find and open 'Anaconda Prompt(Anaconda3)' from the search menu. On Linux, open your bash. Write and 
 run below command:
 ```
-conda create --name test_env
+$ conda create --name test_env
 ``` 
 
 This command will create a virtual conda environment named **test_env**. You can name your environment however you want. Now you must activate your newly created environment 
 with below command.
 
 ```
-conda activate test_env
+$ conda activate test_env
 ```
 
 
@@ -54,12 +53,12 @@ environment is activated, run below command to install PyTorch and torchvision o
 
 For Windows: 
 ```
-pip install torch===1.5.1 torchvision===0.6.1 -f https://download.pytorch.org/whl/torch_stable.html
+$ pip install torch===1.5.1 torchvision===0.6.1 -f https://download.pytorch.org/whl/torch_stable.html
 ```
 
 For Linux: 
 ```
-pip install torch torchvision
+$ pip install torch torchvision
 ```
 
 If installation completes without an error, proceed with the step 4.
@@ -71,28 +70,34 @@ Anaconda Prompt, depending on your operation system and then run following comma
 all other requirements from the file 'requirements.txt'.
 
 ```
-pip install -r requirements.txt
+$ pip install -r requirements.txt
 ```
+
+### 5 - Configuration Folder
+
+Download the configuration folder from below link and extract it into the project workspace.
+
+https://drive.google.com/file/d/1yFzclUCcUM4LhQhFbrzsjR5CLYETU7d1/view?usp=sharing
 
 ## How to Run?
 
 To run the program on a local video, use the following syntax:
 
 ```
-python detect.py video_path cfg_path weights_path names_path
+$ python detect.py video_path cfg_path weights_path names_path
 ```  
 
 So an example usage would be:
 
 ```
-python detect.py video.mp4 config/yolov3.cfg config/yolov3.weights config/coco.names
+$ python detect.py video.mp4 config/yolov3.cfg config/yolov3.weights config/coco.names
 ```  
 This command would detect objects in the video and displays the processed frames in a window. But,
 it would not save the final video. To save the video you should explicitly specify the save flag and the
 output path. Such as:
 
 ```
-python detect.py video.mp4 config/yolov3.cfg config/yolov3.weights config/coco.names --s -path det.mp4
+$ python detect.py video.mp4 config/yolov3.cfg config/yolov3.weights config/coco.names --s -path det.mp4
 ```  
 Above command would save the processed video at the end with the name 'det.mp4'. If you want to stop press space. program will terminate and
 output until this point will be saved.
@@ -101,13 +106,13 @@ You can also set other optional parameters such as fps, confidence threshold and
 suppression threshold.
 
 ```
-python detect.py video.mp4 config/yolov3.cfg config/yolov3.weights config/coco.names --s -path det.mp4 -fps 30 -nms 0.5 -ct 0.9
+$ python detect.py video.mp4 config/yolov3.cfg config/yolov3.weights config/coco.names --s -path det.mp4 -fps 30 -nms 0.5 -ct 0.9
 ```  
 
 To get more information about parameters, run the following:
 
 ```
-python detect.py -h
+$ python detect.py -h
 ```  
 
 ### Run on Single Image
@@ -116,5 +121,5 @@ To run the detector on single image, use the same pattern of arguments. Except i
 jpeg, jpg or png. And if you want to save the final image, provide a valid -path argument and set --s flag.
 
 ```
-python detect.py image.jpg config/yolov3.cfg config/yolov3.weights config/coco.names --s -path image_det.jpg
+$ python detect.py image.jpg config/yolov3.cfg config/yolov3.weights config/coco.names --s -path image_det.jpg
 ```  

@@ -7,9 +7,9 @@ __pycache__/
 *.so
 
 Working on a Symfony2 project using phpStorm IDE, I have added couple of files to git ignore but one file despite being added to git ignore is always appearing....I have tried multiple times but its always there
+config/
 
 .gitignore file:
-
 /app/config/parameters.yml
 /bin/
 /build/
