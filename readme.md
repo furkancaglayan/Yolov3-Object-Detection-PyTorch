@@ -123,3 +123,24 @@ jpeg, jpg or png. And if you want to save the final image, provide a valid -path
 ```
 $ python detect.py image.jpg config/yolov3.cfg config/yolov3.weights config/coco.names --s -path image_det.jpg
 ```  
+
+
+## Continue Development
+
+When detect.py is called, program checks if inputs extension is png or jpg to validate if it's an image. if that is the case,
+detection_callback() function is called with following parameters: image in Image(Pillow), darknet model, display flag and a color list.
+Color list size is n where n is class count. Darknet model on the other hand is loaded at the start of the program with load_model() function.
+It uses weights, cfg and names files. cfg file is used to initialize model while names file indicate unique classes which to predict.
+
+If input is a video, then detect_from_video() function is called. This function generates frames from the video then calls the detection_callback()
+function on each of them. However, this function can be customized. detect_from_video() has an argument called callback. So you can write your own
+callback function with following parameter set: frame, darknet_model, display_video, color_list where display_video is used to show video on runtime. If set to false,
+video will be processed to save without showing. 
+
+To train a new detection model with custom dataset, (1) you have to create a new .names file with your classes, (2) annotate a new dataset with
+tools such as CVAT or microsoft/vott so bounding boxes can be extracted. (3) split dataset into train and validation, (optional) download pretrained weights
+to continue training on them, (5) create a new config file to your liking. At the end of the train you will have new weights. Now detect.py can be used with them.
+A great tutorial exists in : https://blog.francium.tech/custom-object-training-and-detection-with-yolov3-darknet-and-opencv-41542f2ff44e
+
+      
+  
